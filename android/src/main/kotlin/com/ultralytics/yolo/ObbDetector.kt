@@ -291,7 +291,7 @@ class ObbDetector(
                 canvas.drawPath(path, paint)
 
                 paint.style = Paint.Style.FILL
-                paint.textSize = 40f
+                paint.textSize = 60f
                 canvas.drawText(
                     "${detection.cls} ${"%.2f".format(detection.confidence * 100)}%",
                     poly[0].x,
