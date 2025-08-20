@@ -83,6 +83,11 @@ class YOLOViewController {
   /// can receive method calls.
   bool get isInitialized => _methodChannel != null && _viewId != null;
 
+  double _textSize = 16.0; // Default text size in points/dp
+
+  /// The current text size for detection labels in points (iOS) or dp (Android).
+  double get textSize => _textSize;
+
   @visibleForTesting
   void init(MethodChannel methodChannel, int viewId) =>
       _init(methodChannel, viewId);
@@ -529,6 +534,37 @@ class YOLOViewController {
       return null;
     }
   }
+
+  /// Sets the text size for detection labels.
+  ///
+  /// The size is specified in points on iOS and dp on Android.
+  /// Typical values range from 12 to 24.
+  ///
+  /// Example:
+  /// ```dart
+  /// // Set larger text for better visibility
+  /// await controller.setTextSize(20.0);
+  /// ```
+  Future<void> setTextSize(double size) async {
+    final clampedSize = size.clamp(8.0, 48.0); // Reasonable bounds
+    _textSize = clampedSize;
+
+    if (_methodChannel == null) {
+      logInfo(
+        'YOLOViewController: Warning - Cannot set text size, view not yet created',
+      );
+      return;
+    }
+
+    try {
+      await _methodChannel!.invokeMethod('setTextSize', {
+        'textSize': clampedSize,
+      });
+      logInfo('YOLOViewController: Text size set to $_textSize');
+    } catch (e) {
+      logInfo('YOLOViewController: Error setting text size: $e');
+    }
+  }
 }
 
 /// A Flutter widget that displays a real-time camera preview with YOLO object detection.
@@ -671,6 +707,8 @@ class YOLOView extends StatefulWidget {
   /// for stability on devices where GPU inference causes crashes.
   final bool useGpu;
 
+  final double textSize;
+
   const YOLOView({
     super.key,
     required this.modelPath,
@@ -686,6 +724,7 @@ class YOLOView extends StatefulWidget {
     this.confidenceThreshold = 0.5,
     this.iouThreshold = 0.45,
     this.useGpu = true,
+    this.textSize = 16.0,
   });
 
   @override
@@ -1171,6 +1210,7 @@ class YOLOViewState extends State<YOLOView> {
     logInfo(
       'YOLOView: Platform view created with system id: $id, our viewId: $_viewId',
     );
+    _effectiveController.setTextSize(widget.textSize);
 
     _platformViewId = id;
 
