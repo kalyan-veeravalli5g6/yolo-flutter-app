@@ -83,7 +83,7 @@ class YOLOViewController {
   /// can receive method calls.
   bool get isInitialized => _methodChannel != null && _viewId != null;
 
-  double _textSize = 16.0; // Default text size in points/dp
+  double _textSize = 13.0; // Default text size in points/dp
 
   /// The current text size for detection labels in points (iOS) or dp (Android).
   double get textSize => _textSize;
