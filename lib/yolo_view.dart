@@ -546,7 +546,7 @@ class YOLOViewController {
   /// await controller.setTextSize(20.0);
   /// ```
   Future<void> setTextSize(double size) async {
-    final clampedSize = size.clamp(8.0, 48.0); // Reasonable bounds
+    final clampedSize = size.clamp(8.0, 18.0); // Reasonable bounds
     _textSize = clampedSize;
 
     if (_methodChannel == null) {
