@@ -755,7 +755,7 @@ class YOLOView @JvmOverloads constructor(
 
                         // Label text
                         val labelText = "${box.cls} ${"%.1f".format(box.conf * 100)}%"
-                        paint.textSize = 40f
+                        paint.textSize = 80f
                         val fm = paint.fontMetrics
                         val textWidth = paint.measureText(labelText)
                         val textHeight = fm.bottom - fm.top
