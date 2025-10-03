@@ -75,10 +75,10 @@ class YOLODetectionPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     for (final detection in detections) {
-      _drawBoundingBox(canvas, detection);
-      if (showClassName || showConfidence) {
-        _drawLabel(canvas, detection);
-      }
+      // _drawBoundingBox(canvas, detection);
+      // if (showClassName || showConfidence) {
+      //   _drawLabel(canvas, detection);
+      // }
     }
   }
 
