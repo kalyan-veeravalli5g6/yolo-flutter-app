@@ -46,7 +46,7 @@ class YOLOResult {
   ///
   /// This rectangle defines the location and size of the detected
   /// object within the original image, using absolute pixel values.
-  final Rect boundingBox;
+  // final Rect boundingBox;
 
   /// The normalized bounding box coordinates.
   ///
@@ -78,7 +78,7 @@ class YOLOResult {
     required this.classIndex,
     required this.className,
     required this.confidence,
-    required this.boundingBox,
+    // required this.boundingBox,
     required this.normalizedBox,
     this.mask,
     this.keypoints,
@@ -134,7 +134,7 @@ class YOLOResult {
       classIndex: classIndex,
       className: className,
       confidence: confidence,
-      boundingBox: boundingBox,
+      // boundingBox: boundingBox,
       normalizedBox: normalizedBox,
       mask: mask,
       keypoints: keypoints,
@@ -147,12 +147,12 @@ class YOLOResult {
       'classIndex': classIndex,
       'className': className,
       'confidence': confidence,
-      'boundingBox': {
-        'left': boundingBox.left,
-        'top': boundingBox.top,
-        'right': boundingBox.right,
-        'bottom': boundingBox.bottom,
-      },
+      // 'boundingBox': {
+      //   'left': boundingBox.left,
+      //   'top': boundingBox.top,
+      //   'right': boundingBox.right,
+      //   'bottom': boundingBox.bottom,
+      // },
       'normalizedBox': {
         'left': normalizedBox.left,
         'top': normalizedBox.top,
@@ -180,7 +180,7 @@ class YOLOResult {
 
   @override
   String toString() {
-    return 'YOLOResult{classIndex: $classIndex, className: $className, confidence: $confidence, boundingBox: $boundingBox}';
+    return 'YOLOResult{classIndex: $classIndex, className: $className, confidence: $confidence}';
   }
 }
 
