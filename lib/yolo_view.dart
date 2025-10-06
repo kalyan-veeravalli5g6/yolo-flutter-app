@@ -12,7 +12,7 @@ import 'package:ultralytics_yolo/yolo_performance_metrics.dart';
 import 'package:ultralytics_yolo/utils/map_converter.dart';
 import 'package:ultralytics_yolo/config/channel_config.dart';
 import 'package:ultralytics_yolo/widgets/yolo_controller.dart';
-import 'package:ultralytics_yolo/widgets/yolo_overlay.dart';
+// import 'package:ultralytics_yolo/widgets/yolo_overlay.dart';
 
 /// A Flutter widget that displays a real-time camera preview with YOLO object detection.
 class YOLOView extends StatefulWidget {
@@ -30,7 +30,7 @@ class YOLOView extends StatefulWidget {
   final double iouThreshold;
   final bool useGpu;
   final bool showOverlays;
-  final YOLOOverlayTheme overlayTheme;
+  // final YOLOOverlayTheme overlayTheme;
 
   const YOLOView({
     super.key,
@@ -48,7 +48,7 @@ class YOLOView extends StatefulWidget {
     this.iouThreshold = 0.45,
     this.useGpu = true,
     this.showOverlays = true,
-    this.overlayTheme = const YOLOOverlayTheme(),
+    // this.overlayTheme = const YOLOOverlayTheme(),
   });
 
   @override
@@ -239,16 +239,16 @@ class _YOLOViewState extends State<YOLOView> {
     return Stack(
       children: [
         _buildCameraView(),
-        if (widget.showOverlays && _currentDetections.isNotEmpty)
-          YOLOOverlay(
-            detections: _currentDetections,
-            showConfidence: true,
-            showClassName: true,
-            theme: widget.overlayTheme,
-            onDetectionTap: (detection) {
-              logInfo('YOLOView: Detection tapped: ${detection.className}');
-            },
-          ),
+        // if (widget.showOverlays && _currentDetections.isNotEmpty)
+        // YOLOOverlay(
+        //   detections: _currentDetections,
+        //   showConfidence: true,
+        //   showClassName: true,
+        //   theme: widget.overlayTheme,
+        //   onDetectionTap: (detection) {
+        //     logInfo('YOLOView: Detection tapped: ${detection.className}');
+        //   },
+        // ),
       ],
     );
   }
