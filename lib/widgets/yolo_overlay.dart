@@ -42,20 +42,20 @@ class YOLOOverlay extends StatelessWidget {
     final RenderBox renderBox = context.findRenderObject() as RenderBox;
     final localPosition = renderBox.globalToLocal(details.globalPosition);
 
-    for (final detection in detections) {
-      if (_isPointInBoundingBox(localPosition, detection)) {
-        onDetectionTap!(detection);
-        break;
-      }
-    }
+    // for (final detection in detections) {
+    // if (_isPointInBoundingBox(localPosition, detection)) {
+    //   onDetectionTap!(detection);
+    //   break;
+    // }
+    // }
   }
 
-  bool _isPointInBoundingBox(Offset point, YOLOResult detection) {
-    return point.dx >= detection.boundingBox.left &&
-        point.dx <= detection.boundingBox.right &&
-        point.dy >= detection.boundingBox.top &&
-        point.dy <= detection.boundingBox.bottom;
-  }
+  // bool _isPointInBoundingBox(Offset point, YOLOResult detection) {
+  //   return point.dx >= detection.boundingBox.left &&
+  //       point.dx <= detection.boundingBox.right &&
+  //       point.dy >= detection.boundingBox.top &&
+  //       point.dy <= detection.boundingBox.bottom;
+  // }
 }
 
 /// Custom painter for drawing detection overlays.
@@ -88,14 +88,14 @@ class YOLODetectionPainter extends CustomPainter {
       ..strokeWidth = theme.boundingBoxWidth
       ..style = PaintingStyle.stroke;
 
-    final rect = Rect.fromLTRB(
-      detection.boundingBox.left,
-      detection.boundingBox.top,
-      detection.boundingBox.right,
-      detection.boundingBox.bottom,
-    );
+    // final rect = Rect.fromLTRB(
+    //   detection.boundingBox.left,
+    //   detection.boundingBox.top,
+    //   detection.boundingBox.right,
+    //   detection.boundingBox.bottom,
+    // );
 
-    canvas.drawRect(rect, paint);
+    // canvas.drawRect(rect, paint);
   }
 
   void _drawLabel(Canvas canvas, YOLOResult detection) {
@@ -113,25 +113,25 @@ class YOLODetectionPainter extends CustomPainter {
 
     textPainter.layout();
 
-    final labelRect = Rect.fromLTRB(
-      detection.boundingBox.left,
-      detection.boundingBox.top - textPainter.height - 4,
-      detection.boundingBox.left + textPainter.width + 8,
-      detection.boundingBox.top,
-    );
+    // final labelRect = Rect.fromLTRB(
+    //   detection.boundingBox.left,
+    //   detection.boundingBox.top - textPainter.height - 4,
+    //   detection.boundingBox.left + textPainter.width + 8,
+    //   detection.boundingBox.top,
+    // );
 
     // Draw background
     final backgroundPaint = Paint()..color = theme.labelBackgroundColor;
-    canvas.drawRect(labelRect, backgroundPaint);
+    // canvas.drawRect(labelRect, backgroundPaint);
 
     // Draw text
-    textPainter.paint(
-      canvas,
-      Offset(
-        detection.boundingBox.left + 4,
-        detection.boundingBox.top - textPainter.height,
-      ),
-    );
+    // textPainter.paint(
+    //   canvas,
+    // Offset(
+    // detection.boundingBox.left + 4,
+    // detection.boundingBox.top - textPainter.height,
+    // ),
+    // );
   }
 
   String _buildLabelText(YOLOResult detection) {
