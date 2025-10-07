@@ -547,6 +547,7 @@ public class YOLOView: UIView, VideoCaptureDelegate {
 
           switch task {
           case .detect:
+            print("🔥 My Swift code is executing")
             let prediction = predictions.boxes[i]
             rect = CGRect(
               x: prediction.xywhn.minX, y: 1 - prediction.xywhn.maxY, width: prediction.xywhn.width,
