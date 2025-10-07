@@ -540,7 +540,7 @@ public class YOLOView: UIView, VideoCaptureDelegate {
         if i < (resultCount) && i < 50 {
           var rect = CGRect.zero
           var label = ""
-          var boxColor: UIColor = .white
+          var boxColor: UIColor = .clear
           var confidence: CGFloat = 0
           var alpha: CGFloat = 0.9
           var bestClass = ""
@@ -566,7 +566,7 @@ public class YOLOView: UIView, VideoCaptureDelegate {
             confidence = CGFloat(prediction.conf)
             label = String(format: "%@ %.1f", bestClass, confidence * 100)
             let colorIndex = prediction.index % ultralyticsColors.count
-            boxColor = ultralyticsColors[colorIndex]
+            boxColor = UIColor.clear//ultralyticsColors[colorIndex]
             alpha = CGFloat((confidence - 0.2) / (1.0 - 0.2) * 0.9)
           }
           var displayRect = rect
@@ -687,7 +687,7 @@ public class YOLOView: UIView, VideoCaptureDelegate {
           }
 
           let colorIndex = predictions.boxes[i].index % ultralyticsColors.count
-          boxColor = ultralyticsColors[colorIndex]
+          boxColor =  UIColor.clear//ultralyticsColors[colorIndex]
           label = String(format: "%@ %.1f", bestClass, confidence * 100)
           alpha = CGFloat((confidence - 0.2) / (1.0 - 0.2) * 0.9)
 
