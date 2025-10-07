@@ -547,7 +547,7 @@ public class YOLOView: UIView, VideoCaptureDelegate {
 
           switch task {
           case .detect:
-            print("🔥 My Swift code is executing")
+            /*  
             let prediction = predictions.boxes[i]
             rect = CGRect(
               x: prediction.xywhn.minX, y: 1 - prediction.xywhn.maxY, width: prediction.xywhn.width,
@@ -568,6 +568,7 @@ public class YOLOView: UIView, VideoCaptureDelegate {
             let colorIndex = prediction.index % ultralyticsColors.count
             boxColor = ultralyticsColors[colorIndex]
             alpha = CGFloat((confidence - 0.2) / (1.0 - 0.2) * 0.9)
+            */
           }
           var displayRect = rect
           switch UIDevice.current.orientation {
@@ -619,10 +620,10 @@ public class YOLOView: UIView, VideoCaptureDelegate {
             displayRect.size.height /= ratio
           }
           displayRect = VNImageRectForNormalizedRect(displayRect, Int(width), Int(height))
-
+        /*
           boundingBoxViews[i].show(
             frame: displayRect, label: label, color: boxColor, alpha: alpha)
-
+        */
         } else {
           boundingBoxViews[i].hide()
         }
@@ -662,6 +663,7 @@ public class YOLOView: UIView, VideoCaptureDelegate {
 
           switch task {
           case .detect:
+          /*
             let prediction = predictions.boxes[i]
             // For the detect task, invert y using "1 - maxY" as before
             rect = CGRect(
@@ -672,8 +674,7 @@ public class YOLOView: UIView, VideoCaptureDelegate {
             )
             bestClass = prediction.cls
             confidence = CGFloat(prediction.conf)
-            break
-
+          */
           default:
             let prediction = predictions.boxes[i]
             rect = CGRect(
@@ -699,13 +700,14 @@ public class YOLOView: UIView, VideoCaptureDelegate {
               + rect.size.height * videoCapture.shortSide * scaleY)
           rect.size.width *= videoCapture.longSide * scaleX
           rect.size.height *= videoCapture.shortSide * scaleY
-
+          /*
           boundingBoxViews[i].show(
             frame: rect,
             label: label,
             color: boxColor,
             alpha: alpha
           )
+          */
         } else {
           boundingBoxViews[i].hide()
         }
