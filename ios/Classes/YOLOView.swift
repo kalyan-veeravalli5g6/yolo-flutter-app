@@ -557,6 +557,7 @@ public class YOLOView: UIView, VideoCaptureDelegate {
             // boxColor = ultralyticsColors[colorIndex]
             // label = String(format: "%@ %.1f", bestClass, confidence * 100)
             // alpha = CGFloat((confidence - 0.2) / (1.0 - 0.2) * 0.9)
+            return
           default:
             let prediction = predictions.boxes[i]
             let clsIndex = prediction.index
