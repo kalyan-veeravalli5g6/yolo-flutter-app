@@ -754,109 +754,109 @@ class YOLOView @JvmOverloads constructor(
                     Log.d(TAG, "Drawing DETECT boxes: ${result.boxes.size}")
                     
                     // Debug first box coordinates
-                    if (result.boxes.isNotEmpty()) {
-                        val firstBox = result.boxes[0]
-                        Log.d(TAG, "=== First Box Debug ===")
-                        Log.d(TAG, "Box normalized coords: (${firstBox.xywhn.left}, ${firstBox.xywhn.top}, ${firstBox.xywhn.right}, ${firstBox.xywhn.bottom})")
-                        Log.d(TAG, "Box pixel coords: (${firstBox.xywh.left}, ${firstBox.xywh.top}, ${firstBox.xywh.right}, ${firstBox.xywh.bottom})")
-                    }
+                    // if (result.boxes.isNotEmpty()) {
+                    //     val firstBox = result.boxes[0]
+                    //     Log.d(TAG, "=== First Box Debug ===")
+                    //     Log.d(TAG, "Box normalized coords: (${firstBox.xywhn.left}, ${firstBox.xywhn.top}, ${firstBox.xywhn.right}, ${firstBox.xywhn.bottom})")
+                    //     Log.d(TAG, "Box pixel coords: (${firstBox.xywh.left}, ${firstBox.xywh.top}, ${firstBox.xywh.right}, ${firstBox.xywh.bottom})")
+                    // }
                     
-                    for (box in result.boxes) {
-                        val alpha = (box.conf * 255).toInt().coerceIn(0, 255)
-                        val baseColor = ultralyticsColors[box.index % ultralyticsColors.size]
-                        val newColor = Color.argb(
-                            alpha,
-                            Color.red(baseColor),
-                            Color.green(baseColor),
-                            Color.blue(baseColor)
-                        )
+                    // for (box in result.boxes) {
+                    //     val alpha = (box.conf * 255).toInt().coerceIn(0, 255)
+                    //     val baseColor = ultralyticsColors[box.index % ultralyticsColors.size]
+                    //     val newColor = Color.argb(
+                    //         alpha,
+                    //         Color.red(baseColor),
+                    //         Color.green(baseColor),
+                    //         Color.blue(baseColor)
+                    //     )
 
-                        // Use same coordinate calculation for all orientations
-                        // since the image is now correctly oriented before inference
-                        var left = box.xywh.left * scale + dx
-                        var top = box.xywh.top * scale + dy
-                        var right = box.xywh.right * scale + dx
-                        var bottom = box.xywh.bottom * scale + dy
+                    //     // Use same coordinate calculation for all orientations
+                    //     // since the image is now correctly oriented before inference
+                    //     var left = box.xywh.left * scale + dx
+                    //     var top = box.xywh.top * scale + dy
+                    //     var right = box.xywh.right * scale + dx
+                    //     var bottom = box.xywh.bottom * scale + dy
                         
-                        // Ensure coordinates are within view bounds and maintain aspect ratio
-                        val boxWidth = right - left
-                        val boxHeight = bottom - top
+                    //     // Ensure coordinates are within view bounds and maintain aspect ratio
+                    //     val boxWidth = right - left
+                    //     val boxHeight = bottom - top
                         
-                        // Adjust coordinates to maintain aspect ratio and stay within bounds
-                        if (left < 0) {
-                            left = 0f
-                            right = left + boxWidth
-                        }
-                        if (right > vw) {
-                            right = vw.toFloat()
-                            left = right - boxWidth
-                        }
-                        if (top < 0) {
-                            top = 0f
-                            bottom = top + boxHeight
-                        }
-                        if (bottom > vh) {
-                            bottom = vh.toFloat()
-                            top = bottom - boxHeight
-                        }
+                    //     // Adjust coordinates to maintain aspect ratio and stay within bounds
+                    //     if (left < 0) {
+                    //         left = 0f
+                    //         right = left + boxWidth
+                    //     }
+                    //     if (right > vw) {
+                    //         right = vw.toFloat()
+                    //         left = right - boxWidth
+                    //     }
+                    //     if (top < 0) {
+                    //         top = 0f
+                    //         bottom = top + boxHeight
+                    //     }
+                    //     if (bottom > vh) {
+                    //         bottom = vh.toFloat()
+                    //         top = bottom - boxHeight
+                    //     }
                         
-                        // Flip horizontally for front camera (DETECT task)
-                        if (isFrontCamera) {
-                            val flippedLeft = vw - right
-                            val flippedRight = vw - left
-                            left = flippedLeft
-                            right = flippedRight
-                        }
+                    //     // Flip horizontally for front camera (DETECT task)
+                    //     if (isFrontCamera) {
+                    //         val flippedLeft = vw - right
+                    //         val flippedRight = vw - left
+                    //         left = flippedLeft
+                    //         right = flippedRight
+                    //     }
                         
-                        Log.d(TAG, "Drawing box for ${box.cls}: L=$left, T=$top, R=$right, B=$bottom, conf=${box.conf}")
+                    //     Log.d(TAG, "Drawing box for ${box.cls}: L=$left, T=$top, R=$right, B=$bottom, conf=${box.conf}")
 
-                        paint.color = newColor
-                        paint.style = Paint.Style.STROKE
-                        paint.strokeWidth = BOX_LINE_WIDTH
-                        canvas.drawRoundRect(
-                            left, top, right, bottom,
-                            BOX_CORNER_RADIUS, BOX_CORNER_RADIUS,
-                            paint
-                        )
+                    //     paint.color = newColor
+                    //     paint.style = Paint.Style.STROKE
+                    //     paint.strokeWidth = BOX_LINE_WIDTH
+                    //     canvas.drawRoundRect(
+                    //         left, top, right, bottom,
+                    //         BOX_CORNER_RADIUS, BOX_CORNER_RADIUS,
+                    //         paint
+                    //     )
 
-                        // Label text
-                        val labelText = "${box.cls} ${"%.1f".format(box.conf * 100)}%"
-                        paint.textSize = 40f
-                        val fm = paint.fontMetrics
-                        val textWidth = paint.measureText(labelText)
-                        val textHeight = fm.bottom - fm.top
-                        val pad = 8f
+                    //     // Label text
+                    //     val labelText = "${box.cls} ${"%.1f".format(box.conf * 100)}%"
+                    //     paint.textSize = 40f
+                    //     val fm = paint.fontMetrics
+                    //     val textWidth = paint.measureText(labelText)
+                    //     val textHeight = fm.bottom - fm.top
+                    //     val pad = 8f
 
-                        // Label background height is (text height + 2*padding)
-                        val labelBoxHeight = textHeight + 2 * pad
-                        // Place label on top of the box's upper edge
-                        var labelBottom = top
-                        var labelTop = labelBottom - labelBoxHeight
+                    //     // Label background height is (text height + 2*padding)
+                    //     val labelBoxHeight = textHeight + 2 * pad
+                    //     // Place label on top of the box's upper edge
+                    //     var labelBottom = top
+                    //     var labelTop = labelBottom - labelBoxHeight
 
-                        // Ensure label stays within bounds
-                        if (labelTop < 0) {
-                            labelTop = top
-                            labelBottom = labelTop + labelBoxHeight
-                        }
+                    //     // Ensure label stays within bounds
+                    //     if (labelTop < 0) {
+                    //         labelTop = top
+                    //         labelBottom = labelTop + labelBoxHeight
+                    //     }
 
-                        // Rectangle for label background
-                        val labelLeft = left
-                        val labelRight = left + textWidth + 2 * pad
-                        val bgRect = RectF(labelLeft, labelTop, labelRight, labelBottom)
+                    //     // Rectangle for label background
+                    //     val labelLeft = left
+                    //     val labelRight = left + textWidth + 2 * pad
+                    //     val bgRect = RectF(labelLeft, labelTop, labelRight, labelBottom)
 
-                        // Draw background
-                        paint.style = Paint.Style.FILL
-                        paint.color = newColor
-                        canvas.drawRoundRect(bgRect, BOX_CORNER_RADIUS, BOX_CORNER_RADIUS, paint)
+                    //     // Draw background
+                    //     paint.style = Paint.Style.FILL
+                    //     paint.color = newColor
+                    //     canvas.drawRoundRect(bgRect, BOX_CORNER_RADIUS, BOX_CORNER_RADIUS, paint)
 
-                        // Center text vertically within the rectangle
-                        paint.color = Color.WHITE
-                        // Center position = (bgRect.top + bgRect.bottom)/2
-                        val centerY = (bgRect.top + bgRect.bottom) / 2
-                        // Baseline = centerY - (fm.descent + fm.ascent)/2
-                        val baseline = centerY - (fm.descent + fm.ascent) / 2
-                        canvas.drawText(labelText, bgRect.left + pad, baseline, paint)
-                    }
+                    //     // Center text vertically within the rectangle
+                    //     paint.color = Color.WHITE
+                    //     // Center position = (bgRect.top + bgRect.bottom)/2
+                    //     val centerY = (bgRect.top + bgRect.bottom) / 2
+                    //     // Baseline = centerY - (fm.descent + fm.ascent)/2
+                    //     val baseline = centerY - (fm.descent + fm.ascent) / 2
+                    //     canvas.drawText(labelText, bgRect.left + pad, baseline, paint)
+                    // }
                 }
                 // ----------------------------------------
                 // SEGMENT
