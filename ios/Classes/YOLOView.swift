@@ -516,6 +516,13 @@ public class YOLOView: UIView, VideoCaptureDelegate {
 
   func showBoxes(predictions: YOLOResult) {
 
+     if task == .detect {
+         for i in 0..<boundingBoxViews.count {
+            boundingBoxViews[i].hide()
+        }
+        return
+    }
+
     let width = self.bounds.width
     let height = self.bounds.height
     var resultCount = 0
