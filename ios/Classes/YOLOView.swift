@@ -554,6 +554,7 @@ public class YOLOView: UIView, VideoCaptureDelegate {
 
           switch task {
           case .detect:
+            break
             /*  
             let prediction = predictions.boxes[i]
             rect = CGRect(
@@ -565,7 +566,8 @@ public class YOLOView: UIView, VideoCaptureDelegate {
             boxColor = ultralyticsColors[colorIndex]
             label = String(format: "%@ %.1f", bestClass, confidence * 100)
             alpha = CGFloat((confidence - 0.2) / (1.0 - 0.2) * 0.9)
-            default:
+            */
+          default:
             let prediction = predictions.boxes[i]
             let clsIndex = prediction.index
             rect = prediction.xywhn
@@ -575,7 +577,6 @@ public class YOLOView: UIView, VideoCaptureDelegate {
             let colorIndex = prediction.index % ultralyticsColors.count
             boxColor = ultralyticsColors[colorIndex]
             alpha = CGFloat((confidence - 0.2) / (1.0 - 0.2) * 0.9)
-            */
           }
           var displayRect = rect
           switch UIDevice.current.orientation {
